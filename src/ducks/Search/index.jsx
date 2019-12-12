@@ -1,4 +1,4 @@
-import React, { PropTypes } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 import { Formik } from 'formik';
 import * as Yup from 'yup';
@@ -16,15 +16,12 @@ const FormWrapper = styled.div`
     }
 `;
 
-// eslint-disable:
 const SearchForm = ({
-  touched,
-  errors,
-  dirty,
+  /* eslint-disable react/prop-types */
   isSubmitting,
   handleChange,
   handleSubmit,
-  handleReset,
+  /* eslint-enable */
 }) => (
   <form onSubmit={handleSubmit}>
     <input
