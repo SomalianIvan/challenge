@@ -1,7 +1,10 @@
 import React from 'react';
 import styled from 'styled-components';
-import { Formik } from 'formik';
+import { withFormik } from 'formik';
 import * as Yup from 'yup';
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
+import * as SearchActions from './actions'
 
 const FormWrapper = styled.div`
     width: 100%;
@@ -23,47 +26,44 @@ const SearchForm = ({
   handleSubmit,
   /* eslint-enable */
 }) => (
-  <form onSubmit={handleSubmit}>
-    <input
-      id="location"
-      placeholder="City, Neighbourhood or MLS® number"
-      type="text"
-      onChange={handleChange}
-    />
-    <input
-      id="min_price"
-      placeholder="Min Price"
-      type="text"
-      onChange={handleChange}
-    />
-    <input
-      id="max_price"
-      placeholder="Max Price"
-      type="text"
-      onChange={handleChange}
-    />
-    <input
-      id="beds"
-      placeholder="Beds"
-      type="text"
-      onChange={handleChange}
-    />
-    <input
-      id="baths"
-      placeholder="Baths"
-      type="text"
-      onChange={handleChange}
-    />
-    <button type="submit" disabled={isSubmitting}>
-              Submit
-    </button>
-  </form>
+  <FormWrapper>
+    <form onSubmit={handleSubmit}>
+      <input
+        id="location"
+        placeholder="City, Neighbourhood or MLS® number"
+        type="text"
+        onChange={handleChange}
+      />
+      <input
+        id="min_price"
+        placeholder="Min Price"
+        type="text"
+        onChange={handleChange}
+      />
+      <input
+        id="max_price"
+        placeholder="Max Price"
+        type="text"
+        onChange={handleChange}
+      />
+      <input
+        id="beds"
+        placeholder="Beds"
+        type="text"
+        onChange={handleChange}
+      />
+      <input
+        id="baths"
+        placeholder="Baths"
+        type="text"
+        onChange={handleChange}
+      />
+      <button type="submit" disabled={isSubmitting}>
+                Submit
+      </button>
+    </form>
+  </FormWrapper>
 );
-
-SearchForm.propTypes = {
-  // would handle proptypes here
-};
-
 
 const schema = Yup.object().shape({
   location: Yup.string().required('required'),
@@ -73,15 +73,21 @@ const schema = Yup.object().shape({
   baths: Yup.string().required('required'),
 });
 
-const Search = () => (
-  <FormWrapper>
-    <Formik
-      onSubmit={(values) => {
-        alert(JSON.stringify(values, null, 2));
-      }}
-      validationSchema={schema}
-      component={SearchForm}
-    />
-  </FormWrapper>
-);
-export default Search;
+const FormicSearchForm = withFormik({
+  validationSchema: schema,
+  handleSubmit: async (values, {props}) => {
+      props.submitForm(values);
+      alert(JSON.stringify(values, null, 2));
+  }
+})(SearchForm)
+
+SearchForm.propTypes = {
+  // would handle proptypes here
+};
+
+const connectedForm = connect(
+  state => state,
+  dispatch => bindActionCreators(SearchActions, dispatch)
+)(FormicSearchForm)
+
+export default connectedForm;
