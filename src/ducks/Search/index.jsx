@@ -67,17 +67,16 @@ const SearchForm = ({
 
 const schema = Yup.object().shape({
   location: Yup.string().required('required'),
-  min_price: Yup.string().required('required'),
-  max_price: Yup.string().required('required'),
-  beds: Yup.string().required('required'),
-  baths: Yup.string().required('required'),
+  min_price: Yup.string(),
+  max_price: Yup.string(),
+  beds: Yup.string(),
+  baths: Yup.string(),
 });
 
 const FormicSearchForm = withFormik({
   validationSchema: schema,
   handleSubmit: async (values, {props}) => {
       props.submitForm(values);
-      alert(JSON.stringify(values, null, 2));
   }
 })(SearchForm)
 
