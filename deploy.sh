@@ -1,7 +1,6 @@
 git worktree add -B gh-pages public
 git config --global user.email "justanotheraction@inthewall.com"
 git config --global user.name "Action Bronson"
-cd $GITHUB_WORKSPACE
 
 yarn run build
 
