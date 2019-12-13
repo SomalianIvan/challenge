@@ -11,8 +11,6 @@ jobs:
         with:
           fetch-depth: 1
       - uses: ./.github/actions/publish-gh-pages
-        env:
-          PUSH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - name: yarn install
         run: yarn install
 
@@ -20,6 +18,8 @@ jobs:
         run: chmod +x ./deploy.sh
 
       - name: build and deploy
+        env:
+          PUSH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: ./deploy.sh
 
 
