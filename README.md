@@ -25,3 +25,4 @@ Design Criteria:
     - you can have metrics on your s3 buckets and if you use cloudfront, have cloudfront metrics
 - split testing?
     - can you launch darkly with some combination
+- deploy.sh/Makefile is a bad idea. Had a lot of success with pyinvoke for tasks/workflows like deploy, lint, etc ...
