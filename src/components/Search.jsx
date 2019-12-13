@@ -1,10 +1,10 @@
-import React from 'react';
-import styled from 'styled-components';
-import { withFormik } from 'formik';
-import * as Yup from 'yup';
-import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import * as SearchActions from './actions'
+import { bindActionCreators } from 'redux';
+import { withFormik } from 'formik';
+import React from 'react';
+import * as Yup from 'yup';
+import styled from 'styled-components';
+import * as SearchActions from '../ducks/Search/actions';
 
 const FormWrapper = styled.div`
     width: 100%;
@@ -18,8 +18,8 @@ const FormWrapper = styled.div`
         //handle mobile
     }
 `;
-
-const SearchForm = ({
+// stateless component would be in a different folder for react components
+export const SearchForm = ({
   /* eslint-disable react/prop-types */
   isSubmitting,
   handleChange,
@@ -59,34 +59,29 @@ const SearchForm = ({
         onChange={handleChange}
       />
       <button type="submit" disabled={isSubmitting}>
-                Submit
+        Submit
       </button>
     </form>
   </FormWrapper>
 );
-
-const schema = Yup.object().shape({
-  location: Yup.string().required('required'),
-  min_price: Yup.string(),
-  max_price: Yup.string(),
-  beds: Yup.string(),
-  baths: Yup.string(),
-});
-
+const schema = Yup.object()
+  .shape({
+    location: Yup.string()
+      .required('required'),
+    min_price: Yup.string(),
+    max_price: Yup.string(),
+    beds: Yup.string(),
+    baths: Yup.string(),
+  });
 const FormicSearchForm = withFormik({
+  // this can replaced with validate method and be made asynchronous
   validationSchema: schema,
-  handleSubmit: async (values, {props}) => {
-      props.submitForm(values);
-  }
-})(SearchForm)
-
-SearchForm.propTypes = {
-  // would handle proptypes here
-};
-
+  handleSubmit: (values, { props }) => {
+    props.submitForm(values);
+  },
+})(SearchForm);
 const connectedForm = connect(
-  state => state,
-  dispatch => bindActionCreators(SearchActions, dispatch)
-)(FormicSearchForm)
-
+  null,
+  (dispatch) => bindActionCreators(SearchActions, dispatch),
+)(FormicSearchForm);
 export default connectedForm;

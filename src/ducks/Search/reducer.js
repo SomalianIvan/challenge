@@ -2,7 +2,6 @@ import { PUT_RESULTS, START_LOADING } from './actions';
 
 const initialState = {
   isLoading: false,
-  results: null,
 };
 
 const searchReducer = (state = initialState, action) => {
@@ -15,7 +14,7 @@ const searchReducer = (state = initialState, action) => {
     return {
       ...state,
       results: action.results,
-      isLoading: true,
+      isLoading: false,
     };
   }
   return state;
