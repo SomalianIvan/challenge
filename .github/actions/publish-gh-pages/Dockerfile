@@ -8,5 +8,3 @@ LABEL "com.github.actions.name"="Publish the challenge"
 LABEL "com.github.actions.description"="Publish static react website via gh-pages"
 LABEL "com.github.actions.icon"="package"
 LABEL "com.github.actions.color"="green"
-
-COPY entrypoint.sh /entrypoint.sh
